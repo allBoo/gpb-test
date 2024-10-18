@@ -1,0 +1,30 @@
+*.log
+*.pot
+*.pyc
+*.venv/
+*.venv/*
+*.idea/
+*.idea/*
+node_modules/*
+*.hot-update.js
+*.hot-update.json
+.ipynb_checkpoints
+.metadata
+ch_data
+ch_logs
+
+local.*
+*.local.*
+
+# no swap files for vi(m)
+*.sw*
+
+# don't track sqlite db files (default provided by settings.template is dev.db)
+*.db
+
+.DS_Store
+media
+site
+
+#ignore cache
+.cache
