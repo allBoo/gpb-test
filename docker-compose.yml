@@ -5,7 +5,7 @@ services:
     build:
       context: database/
       dockerfile: Dockerfile
-    container_name: database
+    container_name: gpb-test-database
     hostname: database
     ports:
       - "54329:5432"
@@ -24,12 +24,28 @@ services:
     networks:
       - gpb_local
 
+  api:
+    build:
+      context: api/
+      dockerfile: docker/Dockerfile
+    command: python manage.py api dev --host 0 src/api.py
+    container_name: gpb-test-api
+    hostname: api
+    ports:
+      - "8000:8000"
+    volumes:
+      - ${PWD}/api:/app
+    networks:
+      - gpb_local
+    depends_on:
+      - db
+
   import:
     build:
       context: import/
       dockerfile: docker/Dockerfile
     command: python manage.py import -f /tmp/sample/out.zip -z -t -d
-    container_name: import
+    container_name: gpb-test-import
     hostname: import
     volumes:
       - ${PWD}/import:/app
