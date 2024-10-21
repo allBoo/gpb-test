@@ -4,7 +4,7 @@ services:
   db:
     build:
       context: database/
-      dockerfile: database/Dockerfile
+      dockerfile: Dockerfile
     container_name: database
     hostname: database
     ports:
@@ -23,6 +23,22 @@ services:
       retries: 3
     networks:
       - gpb_local
+
+  import:
+    build:
+      context: import/
+      dockerfile: docker/Dockerfile
+    command: python manage.py import -f /tmp/sample/out.zip -z -t -d
+    container_name: import
+    hostname: import
+    volumes:
+      - ${PWD}/import:/app
+      - ${PWD}/sample/:/tmp/sample/
+    networks:
+      - gpb_local
+    depends_on:
+      - db
+
 
 networks:
   gpb_local:
