@@ -40,6 +40,24 @@ services:
     depends_on:
       - db
 
+  ui:
+    build:
+      context: ui/
+      dockerfile: docker/Dockerfile
+    command: npm start
+    container_name: gpb-test-ui
+    hostname: ui
+    ports:
+      - "3000:3000"
+    environment:
+      - REACT_APP_API_URL=http://localhost:8000
+    volumes:
+      - ${PWD}/ui:/app
+    networks:
+      - gpb_local
+    depends_on:
+      - api
+
   import:
     build:
       context: import/

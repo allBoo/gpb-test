@@ -23,6 +23,7 @@ class Config(BaseSettings):
     model_config = SettingsConfigDict(case_sensitive=False)
 
     DEBUG: bool = Field(default=False)
+    ALLOWED_HOSTS: list[str] = Field(default_factory=lambda: os.getenv('ALLOWED_HOSTS', '*').split(','))
 
     DATABASE_DSN: PostgresDsn = Field(default='postgresql+asyncpg://gpb:gpb@db:5432/gpb')
 
